@@ -1,6 +1,13 @@
 package com.kh.mini.controller;
 
+import com.kh.mini.vo.MemberVo;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api")
@@ -24,5 +31,29 @@ public class TestController {
             @RequestParam String company) {
         return name + " " + email + " " + company;
     }
-
+    @GetMapping("/members")
+    public List<Map<String, Object>> findMemers() {
+        List<Map<String, Object>> members = new ArrayList<>();
+        for(int i = 0; i <= 20; i++) {
+            Map<String, Object> member = new HashMap<>();
+            member.put("id", i);
+            member.put("name", i + "번 개발자");
+            member.put("age", 10 + i);
+            members.add(member);
+        }
+        return members;
+    }
+    @GetMapping("/members2")
+    public ResponseEntity<List<MemberVo>> listMembers() {
+        List<MemberVo> list = new ArrayList<>();
+        for(int i = 0; i < 10; i++) {
+            MemberVo vo = new MemberVo();
+            vo.setId("kim123");
+            vo.setPwd("1234" + i);
+            vo.setEmail("kkk@naver.com");
+            vo.setName("김");
+            list.add(vo);
+        }
+        return ResponseEntity.ok(list);
+    }
 }
